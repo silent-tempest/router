@@ -1,0 +1,14 @@
+{
+  "esversion": 6,
+  "strict": "global",
+  "shadow": true,
+  "eqeqeq": true,
+  "eqnull": true,
+  "unused": true,
+  "undef": true,
+  "nonew": true,
+  "noarg": true,
+  "curly": true,
+  "immed": true,
+  "node": true
+}

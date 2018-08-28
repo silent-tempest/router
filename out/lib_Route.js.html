@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lib/Route.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lib/Route.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+let ArgumentException = require( 'argument-exception' );
+let LogicalError      = require( 'logical-error' );
+let methods           = require( 'methods' );
+let toString = Object.prototype.toString;
+
+/**
+ * @memberOf module:router
+ * @constructor Route
+ * @param {string|regexp} path
+ * @example
+ * let Route = require( 'router/lib/Route' );
+ *
+ * let home = new Route( '/' )
+ *   .get( ( request, response, next ) => {
+ *     response.status( 200 ).render( 'home', next );
+ *   } );
+ *
+ * router.use( home );
+ */
+function Route ( path ) {
+  let _params = [];
+
+  if ( typeof path === 'string' ) {
+    this.path = path;
+
+    if ( path !== '*' ) {
+      path = path.replace( /:([_a-z$][\w$]*)/gi, ( match, name ) => {
+
+        if ( ~ _params.indexOf( name ) ) {
+          throw Error( '"' + name + '" parameter already exists' );
+        }
+
+        _params.push( name );
+
+        return '([^/]+)';
+
+      } );
+
+      this._pattern$ = RegExp( '^' + path + '/?$' );
+      this._pattern  = RegExp( '^' + path + '/?' );
+    } else {
+      this._pattern = /^[^]*$/;
+    }
+  } else if ( path instanceof RegExp ) {
+    this._pattern = path;
+  } else {
+    throw TypeError( 'expected a string or regexp, but got ' + toString.call( path ) );
+  }
+
+  this._handlers = {};
+  this._params   = _params;
+}
+
+Route.prototype = {
+  /**
+   * @method _handle
+   * @private
+   * @param  {http.IncomingMessage} request
+   * @param  {http.ServerResponse}  response
+   * @param  {function}             next
+   * @param  {any}                  [error]
+   * @return {void}
+   */
+  _handle ( request, response, next, error ) {
+    let handler = this._handler();
+
+    if ( error ) {
+      handler( error, request, response, next );
+    } else {
+      handler( request, response, next );
+    }
+  },
+
+  /**
+   * Returns route's handler for a request.
+   * @memberOf module:router.Route
+   * @private
+   * @method _handler
+   * @param  {http.IncomingMessage} request
+   * @param  {any}                  error
+   * @return {function?}
+   */
+  _handler ( request, error ) {
+    let handler = this._handlers.ALL || this._handlers[ request.method ];
+
+    if ( ! handler ) {
+      return;
+    }
+
+    if ( error ? handler.length &lt; 4 : handler.length >= 4 ) {
+      return;
+    }
+
+    return handler;
+  },
+
+  /**
+   * @memberOf module:router.Route
+   * @private
+   * @method _handles
+   * @param  {http.IncomingMessage} request
+   * @param  {any}                  error
+   * @return {any}
+   */
+  _handles ( request, error ) {
+    return this._handler( request, error ) &amp;&amp; ( this._pattern$ || this._pattern ).test( request.url );
+  },
+
+  /**
+   * @private
+   * @method _process
+   * @param {http.IncomingMessage} request
+   * @chainable
+   */
+  _process ( request ) {
+    request.params = {};
+
+    if ( this._params.length ) {
+      let match = this._pattern.exec( request.url );
+
+      for ( let i = 0, l = this._params.length; i &lt; l; ++i ) {
+        request.params[ this._params[ i ] ] = match[ i + 1 ];
+      }
+    }
+
+    return this;
+  },
+
+  constructor: Route
+};
+
+methods.concat( 'all' ).forEach( ( lowerMethod ) => {
+  let upperMethod = lowerMethod.toUpperCase();
+
+  Route.prototype[ lowerMethod ] = function ( handler ) {
+    let method = '&lt;Route>.' + lowerMethod + '(handler: function)';
+
+    if ( typeof handler !== 'function' ) {
+      throw ArgumentException( method, 'handler', handler );
+    }
+
+    if ( this._handlers[ upperMethod ] || arguments.length > 1 ) {
+      throw LogicalError( method, 'multiple method handlers not implemented. use another route for this' );
+    }
+
+    if ( this._handlers.ALL ) {
+      throw LogicalError( method, 'adding a handler to another method when ALL exists does not make sense' );
+    }
+
+    this._handlers[ upperMethod ] = handler;
+
+    return this;
+  };
+} );
+
+module.exports = Route;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-router.html">router</a></li></ul><h3>Classes</h3><ul><li><a href="module-router.Response.html">Response</a></li><li><a href="module-router.Route.html">Route</a></li><li><a href="module-router.Router.html">Router</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Aug 26 2018 22:32:10 GMT+0700 (+07)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+out
+.jsdoc.js
+.jshintrc
+.jshintignore
+.gitignore
