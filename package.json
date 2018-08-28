@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "argument-exception": "silent-tempest/argument-exception#master",
-    "logical-error": "silent-tempest/logical-error#master",
+    "argument-exception": "github:silent-tempest/argument-exception#master",
+    "logical-error": "github:silent-tempest/logical-error#master",
     "methods": "^1.1.2",
     "mime": "^2.3.1",
-    "safe-resolve-path": "silent-tempest/safe-resolve-path#master",
-    "super-cookie": "silent-tempest/super-cookie#master"
+    "safe-resolve-path": "github:silent-tempest/safe-resolve-path#master",
+    "super-cookie": "github:silent-tempest/super-cookie#master"
   },
   "devDependencies": {
     "jshint": "*",
@@ -23,5 +23,16 @@
     "router"
   ],
   "author": "SILENT",
-  "license": "MIT"
+  "license": "MIT",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silent-tempest/router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/silent-tempest/router/issues"
+  },
+  "homepage": "https://github.com/silent-tempest/router#readme"
 }
