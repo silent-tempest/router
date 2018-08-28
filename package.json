@@ -16,7 +16,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "docs": "rm -Rf out && jsdoc -r -c .jsdoc.js .",
+    "docs": "rm -Rf docs && jsdoc -o docs -r -c .jsdoc.js .",
     "lint": "jshint ."
   },
   "keywords": [
