@@ -1,0 +1,16 @@
+{
+  "name": "router.send_static",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "router": "github:silent-tempest/router#master",
+    "resolve_path": "github:silent-tempest/resolve_path#master",
+    "utils": "github:silent-tempest/utils#master"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SILENT",
+  "license": "SEE LICENSE IN https://github.com/silent-tempest/router/blob/master/LICENSE"
+}

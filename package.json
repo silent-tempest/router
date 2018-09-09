@@ -2,37 +2,37 @@
   "name": "router",
   "version": "1.0.0",
   "description": "",
+  "main": "index.js",
   "dependencies": {
-    "argument-exception": "github:silent-tempest/argument-exception#master",
-    "logical-error": "github:silent-tempest/logical-error#master",
+    "cookie": "github:silent-tempest/cookie#master",
     "methods": "^1.1.2",
     "mime": "^2.3.1",
-    "safe-resolve-path": "github:silent-tempest/safe-resolve-path#master",
-    "super-cookie": "github:silent-tempest/super-cookie#master"
+    "resolve_path": "github:silent-tempest/resolve_path#master",
+    "utils": "github:silent-tempest/utils#master"
   },
-  "devDependencies": {
-    "jshint": "*",
-    "jsdoc": "*"
-  },
-  "main": "index.js",
-  "scripts": {
-    "docs": "rm -Rf docs && jsdoc -d docs -r -c .jsdoc.js .",
-    "lint": "jshint ."
-  },
-  "keywords": [
-    "router"
-  ],
-  "author": "SILENT",
-  "license": "MIT",
   "directories": {
     "lib": "lib"
+  },
+  "scripts": {
+    "prepublish": "npm run lint && npm run test && npm run docs",
+    "test": "mocha -r chai/register-should",
+    "docs": "jsdoc -d docs . lib",
+    "lint": "jshint ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/silent-tempest/router.git"
   },
+  "author": "SILENT",
+  "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/silent-tempest/router/issues"
   },
-  "homepage": "https://github.com/silent-tempest/router#readme"
+  "homepage": "https://github.com/silent-tempest/router#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "jsdoc": "^3.5.5",
+    "jshint": "^2.9.6",
+    "mocha": "^5.2.0"
+  }
 }

@@ -2,6 +2,6 @@
 
 module.exports = {
   source: {
-    exclude: [ 'node_modules', 'out', '.jsdoc.js' ]
+    exclude: [ 'node_modules', 'docs', 'dist', 'test', '.jsdoc.js' ]
   }
 };

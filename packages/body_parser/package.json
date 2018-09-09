@@ -1,0 +1,17 @@
+{
+  "name": "router.body_parser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SILENT",
+  "license": "SEE LICENSE IN https://github.com/silent-tempest/router/blob/master/LICENSE",
+  "dependencies": {
+    "mime": "^2.3.1",
+    "qs": "^6.5.2",
+    "utils": "github:silent-tempest/utils#master"
+  },
+  "devDependencies": {},
+  "description": ""
+}
